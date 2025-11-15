@@ -1,0 +1,25 @@
+{
+  "entries": [
+    {
+      "version": "V1.0",
+      "updatedAt": "2025-11-15",
+      "zh": [
+        "- 演示如何通过 RegisterModule 注册中文/英文更新日志。",
+        "- 该文件被嵌入 DLL，在初始化时一次性读取。"
+      ],
+      "en": [
+        "- Demonstrates how to feed changelog data into ModChangelogCenter.",
+        "- JSON is embedded as a resource and loaded at startup."
+      ]
+    },
+    {
+      "version": "V0.9",
+      "zh": [
+        "- 旧版本示例。"
+      ],
+      "en": [
+        "- Legacy entry example."
+      ]
+    }
+  ]
+}

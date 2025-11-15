@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>9.0</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>ModChangelogCenterSample</AssemblyName>
+    <RootNamespace>ModChangelogCenterSample</RootNamespace>
+    <DuckovPath>E:\steam\steamapps\common\Escape from Duckov</DuckovPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="$(DuckovPath)\Duckov_Data\Managed\TeamSoda.*" />
+    <Reference Include="$(DuckovPath)\Duckov_Data\Managed\ItemStatsSystem.dll" />
+    <Reference Include="$(DuckovPath)\Duckov_Data\Managed\Unity*" />
+    <Reference Include="$(DuckovPath)\Duckov_Data\Managed\UniTask.dll" />
+    <Reference Include="$(DuckovPath)\Duckov_Data\Managed\Newtonsoft.Json.dll" />
+    <Reference Include="$(DuckovPath)\Duckov_Data\Managed\TextMeshPro*.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>E:\steam\steamapps\workshop\content\3167020\3589088839\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="ModChangelogCenter">
+      <HintPath>$(DuckovPath)\Duckov_Data\Mods\ModChangelogCenter\ModChangelogCenter.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="info.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <EmbeddedResource Include="Changelog\SampleChangelog.json" />
+  </ItemGroup>
+</Project>
