@@ -50,6 +50,48 @@ dotnet build ModChangelogCenterSample/ModChangelogCenterSample/ModChangelogCente
 
 无论哪种方案，只要能在编译时找到 ModChangelogCenter.dll 即可。
 
+## 注册方式（多种示例）
+
+1. **直接引用 ModChangelogCenter 命名空间**  
+   ```csharp
+   using ModChangelogCenter;
+   
+   bool ok = ChangelogRegistry.RegisterModule(
+       "YourModuleId",
+       "模组中文名称",
+       "Module English Name",
+       jsonPayload,
+       isInternal: false);
+   ```
+   适合你确定前置 DLL 会随游戏一同部署的情况。
+
+2. **反射调用（本仓库默认方式）**  
+   ```csharp
+   MethodInfo? register = AccessTools.Method(
+       "ModChangelogCenter.ChangelogRegistry:RegisterModule",
+       new[] { typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool) });
+   object? result = register?.Invoke(null, new object[] { moduleId, zhName, enName, jsonPayload, false });
+   bool ok = result is bool flag && flag;
+   ```
+   无需在编译期添加引用，适合只想在运行时检查前置是否存在的情况。
+
+3. **公共 API（对其他模组开放）**  
+   ```csharp
+   public static bool RegisterExternal(string moduleId, string zhName, string enName, string json)
+   {
+       object? result = RegisterModuleMethod?.Invoke(null, new object[] { moduleId, zhName, enName, json, false });
+       return result is bool flag && flag;
+   }
+   ```
+   其它模组引用你的 DLL 后即可调用，无需重复写注册逻辑。
+
+4. **外部 JSON / 动态刷新**  
+   ```csharp
+   string json = File.ReadAllText(changelogPath, Encoding.UTF8);
+   ChangelogRegistry.RegisterModule(moduleId, zhName, enName, json);
+   ```
+   JSON 可以来自嵌入资源、磁盘、网络等任意位置。想动态刷新时再次调用即可覆盖旧记录。
+
 ## JSON 格式与注册流程
 
 ### 1. 编写 changelog JSON
